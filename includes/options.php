@@ -131,7 +131,7 @@
 			<form method="post" action="options.php">
 				<?php
 					settings_fields( 'events_options' );
-					do_settings_sections( 'theme_options' );
+					do_settings_sections( 'events_options' );
 					submit_button();
 				?>
 			</form>
@@ -156,7 +156,7 @@
 		// $title - Section title
 		// $callback - // Section callback (we don't want anything)
 		// $page - // Menu slug, used to uniquely identify the page. See events_theme_options_add_page().
-		add_settings_section( 'general', null,  '__return_false', 'theme_options' );
+		add_settings_section( 'general', null,  '__return_false', 'events_options' );
 
 
 		// Register our individual settings fields
@@ -166,11 +166,11 @@
 		// $callback - Function that creates the field (from the Theme Option Fields section).
 		// $page - The menu page on which to display this field.
 		// $section - The section of the settings page in which to show the field.
-		add_settings_field( 'page_slug', __( 'Page Slug', 'events' ), 'events_settings_field_page_slug', 'theme_options', 'general' );
-		add_settings_field( 'page_title', __( 'Page Title', 'events' ), 'events_settings_field_page_title', 'theme_options', 'general' );
-		add_settings_field( 'page_text', __( 'Page Text', 'events' ), 'events_settings_field_page_text', 'theme_options', 'general' );
-		add_settings_field( 'heading_future', __( 'Future Heading', 'events' ), 'events_settings_field_heading_future', 'theme_options', 'general' );
-		add_settings_field( 'heading_past', __( 'Past Heading', 'events' ), 'events_settings_field_heading_past', 'theme_options', 'general' );
+		add_settings_field( 'page_slug', __( 'Page Slug', 'events' ), 'events_settings_field_page_slug', 'events_options', 'general' );
+		add_settings_field( 'page_title', __( 'Page Title', 'events' ), 'events_settings_field_page_title', 'events_options', 'general' );
+		add_settings_field( 'page_text', __( 'Page Text', 'events' ), 'events_settings_field_page_text', 'events_options', 'general' );
+		add_settings_field( 'heading_future', __( 'Future Heading', 'events' ), 'events_settings_field_heading_future', 'events_options', 'general' );
+		add_settings_field( 'heading_past', __( 'Past Heading', 'events' ), 'events_settings_field_heading_past', 'events_options', 'general' );
 	}
 	add_action( 'admin_init', 'events_theme_options_init' );
 
@@ -188,10 +188,10 @@
 		// $capability - Capability required
 		// $menu_slug - Used to uniquely identify the page
 		// $function - Function that renders the options page
-		// $theme_page = add_theme_page( __( 'Events Options', 'events' ), __( 'Options', 'events' ), 'edit_theme_options', 'theme_options', 'events_theme_options_render_page' );
+		// $theme_page = add_theme_page( __( 'Events Options', 'events' ), __( 'Options', 'events' ), 'edit_theme_options', 'events_options', 'events_theme_options_render_page' );
 
-		// $theme_page = add_menu_page( __( 'Theme Options', 'events' ), __( 'Theme Options', 'events' ), 'edit_theme_options', 'theme_options', 'events_theme_options_render_page' );
-		$theme_page = add_submenu_page( 'edit.php?post_type=gmt-events', __( 'Events Options', 'events' ), __( 'Options', 'events' ), 'edit_theme_options', 'theme_options', 'events_theme_options_render_page' );
+		// $theme_page = add_menu_page( __( 'Theme Options', 'events' ), __( 'Theme Options', 'events' ), 'edit_theme_options', 'events_options', 'events_theme_options_render_page' );
+		$theme_page = add_submenu_page( 'edit.php?post_type=gmt-events', __( 'Events Options', 'events' ), __( 'Options', 'events' ), 'edit_theme_options', 'events_options', 'events_theme_options_render_page' );
 	}
 	add_action( 'admin_menu', 'events_theme_options_add_page' );
 
