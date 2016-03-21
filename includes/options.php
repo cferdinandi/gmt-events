@@ -100,8 +100,8 @@
 			$output['page_title'] = wp_filter_nohtml_kses( $input['page_title'] );
 
 		if ( isset( $input['page_text'] ) && ! empty( $input['page_text'] ) ) {
-			$output['page_text'] = wp_filter_nohtml_kses( events_process_jetpack_markdown( $input['page_text'] ) );
-			$output['page_text_markdown'] = wp_filter_nohtml_kses( $input['page_text'] );
+			$output['page_text'] = wp_filter_post_kses( events_process_jetpack_markdown( $input['page_text'] ) );
+			$output['page_text_markdown'] = wp_filter_post_kses( $input['page_text'] );
 		}
 
 		if ( isset( $input['heading_future'] ) && ! empty( $input['heading_future'] ) )
