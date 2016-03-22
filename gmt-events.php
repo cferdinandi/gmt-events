@@ -5,7 +5,7 @@
  * Plugin URI: https://github.com/cferdinandi/gmt-events/
  * GitHub Plugin URI: https://github.com/cferdinandi/gmt-events/
  * Description: Adds an Events custom post type.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Chris Ferdinandi
  * Author URI: http://gomakethings.com
  * License: MIT
