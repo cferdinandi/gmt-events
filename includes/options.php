@@ -40,7 +40,7 @@
 	function events_settings_field_page_text() {
 		$options = events_get_theme_options();
 		?>
-		<textarea class="large-text" name="events_theme_options[page_text]" id="page_text" cols="50" rows="10"><?php echo esc_textarea( events_get_jetpack_markdown( $options, 'page_text' ) ); ?></textarea>
+		<textarea class="large-text" name="events_theme_options[page_text]" id="page_text" cols="50" rows="10"><?php echo stripslashes( esc_textarea( events_get_jetpack_markdown( $options, 'page_text' ) ) ); ?></textarea>
 		<label class="description" for="page_text"><?php _e( 'The events archive page text', 'events' ); ?></label>
 		<?php
 	}
