@@ -19,7 +19,7 @@
 		}
 
 		// Else, return content
-		return $content;
+		return wp_filter_post_kses( $content );
 
 	}
 
