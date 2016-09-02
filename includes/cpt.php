@@ -29,7 +29,7 @@
 			'menu_icon'     => 'dashicons-calendar-alt',
 			'supports'      => array(
 				'title',
-				'editor',
+				// 'editor',
 				// 'excerpt',
 				'revisions',
 				'wpcom-markdown',
