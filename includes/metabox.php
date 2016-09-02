@@ -16,7 +16,7 @@
 	function events_metabox_defaults() {
 		return array(
 
-			// Time
+			// Date and Time
 			'time_start_hour' => '',
 			'time_start_minutes' => '',
 			'time_start_ampm' => 'am',
@@ -29,10 +29,15 @@
 			'location' => '',
 
 			// Registration
-			'register_html' => '',
-			'register_html_markdown' => '',
 			'register_link' => '',
-			'register_label' => 'Learn More',
+
+			// Content
+			'type' => 'talk',
+			'video' => '',
+			'slides' => '',
+			'audio' => '',
+			'downloads' => '',
+			'post' => '',
 
 		);
 	}
@@ -55,6 +60,14 @@
 		?>
 
 			<fieldset>
+
+				<p><strong>The Basics</strong></p>
+
+				<?php
+					/**
+					 * Date and Time
+					 */
+				?>
 
 				<div>
 					<label for="events_start_date"><?php _e( 'Start Date:', 'events' ); ?></label>
@@ -127,17 +140,25 @@
 				</div>
 				<br>
 
+
+				<?php
+					/**
+					 * Location
+					 */
+				?>
+
 				<div>
-					<label for="events_location"><?php _e( 'Location', 'events' ); ?></label>
+					<label for="events_location"><?php _e( 'Location:', 'events' ); ?></label>
 					<input type="text" class="large-text" id="events_location" name="events[location]" value="<?php echo esc_attr( $details['location'] ); ?>">
 				</div>
 				<br>
 
-				<div>
-					<label for="events_register_html"><?php _e( 'Registration Form/Markup', 'events' ); ?></label>
-					<textarea class="large-text" id="events_register_html" name="events[register_html]" cols="50" rows="4"><?php echo esc_textarea( events_get_jetpack_markdown( $details, 'register_html' ) ); ?></textarea>
-				</div>
-				<br>
+
+				<?php
+					/**
+					 * Registration
+					 */
+				?>
 
 				<div>
 					<label for="events_register_link"><?php _e( 'Registration Link:', 'events' ); ?></label>
@@ -145,9 +166,75 @@
 				</div>
 				<br>
 
+
+				<p><strong>Content</strong></p>
+
+
+				<?php
+					/**
+					 * Event Type
+					 */
+				?>
+
 				<div>
-					<label for="events_register_label"><?php _e( 'Registration Link Label:', 'events' ); ?></label>
-					<input type="text" class="regular-text" id="events_register_label" name="events[register_label]" value="<?php echo esc_attr( $details['register_label'] ); ?>">
+					<?php _e( 'Type:', 'events' ); ?><br>
+					<label>
+						<input type="checkbox" id="events_type_talk" name="events[type]" value="talk" <?php checked( $details['type'], 'talk' ); ?>>
+						Talk
+					</label><br>
+					<label>
+						<input type="checkbox" id="events_type_" name="events[type]" value="workshop" <?php checked( $details['type'], 'workshop' ); ?>>
+						Workshop
+					</label><br>
+					<label>
+						<input type="checkbox" id="events_type_" name="events[type]" value="keynote" <?php checked( $details['type'], 'keynote' ); ?>>
+						Keynote
+					</label><br>
+					<label>
+						<input type="checkbox" id="events_type_" name="events[type]" value="webcast" <?php checked( $details['type'], 'webcast' ); ?>>
+						Webcast
+					</label><br>
+				</div>
+				<br>
+
+
+				<?php
+					/**
+					 * Materials
+					 */
+				?>
+
+				<div>
+					<label for="events_video"><?php _e( 'Video:', 'events' )?></label><br>
+					<input type="url" class="large-text" name="events[video]" id="events_video" value="<?php echo esc_attr( $details['video'] ); ?>"><br>
+					<button type="button" class="button" id="events_video_upload_btn" data-events-materials="#events_video"><?php _e( 'Upload Video', 'events' )?></button>
+				</div>
+				<br>
+
+				<div>
+					<label for="events_slides"><?php _e( 'Slides:', 'events' )?></label><br>
+					<input type="url" class="large-text" name="events[slides]" id="events_slides" value="<?php echo esc_attr( $details['slides'] ); ?>"><br>
+					<button type="button" class="button" id="events_slides_upload_btn" data-events-materials="#events_slides"><?php _e( 'Upload Slides', 'events' )?></button>
+				</div>
+				<br>
+
+				<div>
+					<label for="events_"><?php _e( 'Audio:', 'events' )?></label><br>
+					<input type="url" class="large-text" name="events[audio]" id="events_audio" value="<?php echo esc_attr( $details['audio'] ); ?>"><br>
+					<button type="button" class="button" id="events_audio_upload_btn" data-events-materials="#events_audio"><?php _e( 'Upload Audio', 'events' )?></button>
+				</div>
+				<br>
+
+				<div>
+					<label for="events_downloads"><?php _e( 'Downloads:', 'events' )?></label><br>
+					<input type="url" class="large-text" name="events[downloads]" id="events_downloads" value="<?php echo esc_attr( $details['downloads'] ); ?>"><br>
+					<button type="button" class="button" id="events_downloads_upload_btn" data-events-materials="#events_downloads"><?php _e( 'Upload Downloads', 'events' )?></button>
+				</div>
+				<br>
+
+				<div>
+					<label for="events_post"><?php _e( 'Post:', 'events' )?></label><br>
+					<input type="url" class="large-text" name="events[post]" id="events_post" value="<?php echo esc_attr( $details['post'] ); ?>">
 				</div>
 				<br>
 
@@ -189,11 +276,6 @@
 		// Sanitize all data
 		$sanitized = array();
 		foreach ( $_POST['events'] as $key => $detail ) {
-			if ( $key === 'register_html' ) {
-				$sanitized['register_html'] = events_process_jetpack_markdown( $detail );
-				$sanitized['register_html_markdown'] = $detail;
-				continue;
-			}
 			$sanitized[$key] = wp_filter_post_kses( $detail );
 		}
 
@@ -321,3 +403,26 @@
 		return get_metadata( 'post', $revision->ID, $field, true );
 	}
 	add_filter( '_wp_post_revision_field_my_meta', 'events_display_revisions_fields', 10, 2 );
+
+
+
+	/**
+	 * Load the media uploader
+	 */
+	function gmt_events_load_admin_scripts( $hook ) {
+		global $typenow;
+		if( $typenow == 'gmt-events' ) {
+			wp_enqueue_media();
+
+			// Registers and enqueues the required javascript.
+			wp_register_script( 'meta-box-image', plugins_url( '../includes/js/gmt-events.js' , __FILE__ ), array( 'jquery' ) );
+			wp_localize_script( 'meta-box-image', 'meta_image',
+				array(
+					'title' => __( 'Choose or Upload Event Materials', 'events' ),
+					'button' => __( 'Use this image', 'events' ),
+				)
+			);
+			wp_enqueue_script( 'meta-box-image' );
+		}
+	}
+	add_action( 'admin_enqueue_scripts', 'gmt_events_load_admin_scripts', 10, 1 );
