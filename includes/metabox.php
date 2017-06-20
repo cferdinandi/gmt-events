@@ -11,6 +11,21 @@
 
 
 	/**
+	 * Get valid event types
+	 */
+	function events_get_valid_types() {
+		return array(
+			'talk',
+			'workshop',
+			'keynote',
+			'webcast',
+			'podcast',
+		);
+	}
+
+
+
+	/**
 	 * Create the metabox default values
 	 */
 	function events_metabox_defaults() {
@@ -178,22 +193,15 @@
 
 				<div>
 					<?php _e( 'Type:', 'events' ); ?><br>
-					<label>
-						<input type="checkbox" id="events_type_talk" name="events[type]" value="talk" <?php checked( $details['type'], 'talk' ); ?>>
-						Talk
-					</label><br>
-					<label>
-						<input type="checkbox" id="events_type_" name="events[type]" value="workshop" <?php checked( $details['type'], 'workshop' ); ?>>
-						Workshop
-					</label><br>
-					<label>
-						<input type="checkbox" id="events_type_" name="events[type]" value="keynote" <?php checked( $details['type'], 'keynote' ); ?>>
-						Keynote
-					</label><br>
-					<label>
-						<input type="checkbox" id="events_type_" name="events[type]" value="webcast" <?php checked( $details['type'], 'webcast' ); ?>>
-						Webcast
-					</label><br>
+					<?php
+						$types = events_get_valid_types();
+						foreach( $types as $type ) :
+					?>
+						<label>
+							<input type="radio" id="events_type_<?php echo esc_attr($type); ?>" name="events[type]" value="<?php echo esc_attr($type); ?>" <?php checked( $details['type'], $type ); ?>>
+							<?php _e( ucfirst( esc_attr($type) ), 'gmt_events' ); ?>
+						</label><br>
+					<?php endforeach; ?>
 				</div>
 				<br>
 
